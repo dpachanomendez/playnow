@@ -41,7 +41,7 @@ export default function ReservaForm() {
   // Renderizar brick Mercado Pago cuando tengamos preferenceId y SDK cargado
   useEffect(() => {
     if (formData.metodoPago === "mercadopago" && preferenceId && window.MercadoPago) {
-      const mp = new window.MercadoPago("YOUR_PUBLIC_KEY", { locale: "es" }); // Cambia por tu public key real
+      const mp = new window.MercadoPago("TEST-cd4c4aaf-9b03-4d30-a65a-73b4fdf89124", { locale: "es" }); // Cambia por tu public key real
 
       const bricksBuilder = mp.bricks();
 
@@ -77,7 +77,7 @@ export default function ReservaForm() {
           onSubmit: ({ selectedPaymentMethod, formData: paymentFormData }) => {
             return new Promise((resolve, reject) => {
               // Envía los datos de pago a backend para procesar
-              fetch("/api/payments/process_payment", {
+              fetch("http://localhost:4000/api/payments/process_payment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(paymentFormData),
