@@ -1,3 +1,4 @@
+import "dotenv/config"; // Make sure this is at the very top
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -6,7 +7,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import taksRoutes from "./routes/tasks.routes.js";
 import reservasRoutes from "./routes/reserva.routes.js";
-import paymentRoutes from "./routes/payment.routes.js"; // <--- Importación ruta pagos
+// import paymentRoutes from "./routes/payment.routes.js"; // <--- Importación ruta pagos (REMOVED)
+import paypalRoutes from "./routes/paypal.routes.js"; // Import PayPal routes
 
 import { FRONTEND_URL } from "./config.js";
 import { connectDB } from "./db.js"; // ✅ conexión a MongoDB
@@ -63,9 +65,10 @@ app.use("/api/reservas", (req, res, next) => {
 
 // Rutas de la aplicación
 app.use("/api/auth", authRoutes);
-app.use("/api", taksRoutes);
+app.use("/api", taksRoutes); // General tasks routes
 app.use("/api/reservas", reservasRoutes);
-app.use("/api/payments", paymentRoutes); // <--- Ruta pagos Mercado Pago
+// app.use("/api/payments", paymentRoutes); // <--- Ruta pagos Mercado Pago (REMOVED)
+app.use("/api", paypalRoutes); // Register PayPal routes under /api
 
 // Middleware de errores
 app.use((err, req, res, next) => {
